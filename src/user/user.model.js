@@ -2,7 +2,7 @@ import scheme from "../../database/scheme.js";
 import {DataTypes} from "sequelize";
 import TokenModel from "../token/token.model.js";
 
-const UserModel = await scheme.define('users', {
+export const UserModel = await scheme.define('users', {
     id: {
         primaryKey: true,
         type: DataTypes.INTEGER,
@@ -19,7 +19,8 @@ const UserModel = await scheme.define('users', {
     },
     email: {
         type: DataTypes.STRING,
-        allowNull: false
+        allowNull: false,
+        unique: true
     },
     phone: {
         type: DataTypes.STRING,
@@ -37,5 +38,3 @@ const UserModel = await scheme.define('users', {
 
 UserModel.hasOne(TokenModel)
 TokenModel.belongsTo(UserModel)
-
-export default UserModel
