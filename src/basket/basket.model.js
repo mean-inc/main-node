@@ -1,8 +1,8 @@
 import scheme from "../../database/scheme.js";
 import {DataTypes} from "sequelize";
-import UserModel from "../user/user.model.js";
+import {UserModel} from "../user/user.model.js";
 
-const BasketModel = scheme.define('basket', {
+export const BasketModel = scheme.define('basket', {
     id: {
         type: DataTypes.INTEGER,
         allowNull: false,
@@ -15,7 +15,7 @@ const BasketModel = scheme.define('basket', {
     }
 })
 
-const BasketDeviceModel = scheme.define('basketDevice', {
+export const BasketDeviceModel = scheme.define('basketDevice', {
     id: {
         type: DataTypes.INTEGER,
         allowNull: false,
@@ -29,6 +29,11 @@ const BasketDeviceModel = scheme.define('basketDevice', {
     basketId: {
         type: DataTypes.INTEGER,
         allowNull: false,
+    },
+    amount: {
+        type: DataTypes.INTEGER,
+        allowNull: false,
+        defaultValue: 1
     }
 })
 
