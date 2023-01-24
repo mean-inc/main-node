@@ -1,4 +1,4 @@
-import {ApiError} from "../exceptions/index.js";
+import {ApiError} from "./index.js";
 
 export default function (error, req, res, next) {
     console.log(error)

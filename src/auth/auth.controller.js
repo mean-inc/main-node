@@ -1,5 +1,5 @@
 import authService from "./auth.service.js";
-import {ApiError} from "../exceptions/index.js";
+import {ApiError} from "../error/index.js";
 import {UserModel} from "../user/user.model.js";
 
 class AuthController {

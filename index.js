@@ -2,7 +2,7 @@ import express from 'express'
 import dotenv from 'dotenv'
 import scheme from "./database/scheme.js";
 import routes from "./src/routes/index.js";
-import errorMiddleware from "./src/middleware/error.middleware.js";
+import errorMiddleware from "./src/error/error.middleware.js";
 dotenv.config()
 
 const PORT = process.env.APP_PORT

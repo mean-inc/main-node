@@ -1,5 +1,5 @@
 import {UserModel} from '../user/user.model.js'
-import {ApiError} from "../exceptions/index.js";
+import {ApiError} from "../error/index.js";
 import bcrypt from 'bcrypt'
 import tokenService from "../token/token.service.js";
 import {UserDto} from "../user/user.dto.js";
