@@ -1,6 +1,5 @@
 import authService from "./auth.service.js";
-import {ApiError} from "../error/index.js";
-import {UserModel} from "../user/user.model.js";
+import tokenService from "../token/token.service.js";
 
 class AuthController {
 
@@ -9,7 +8,7 @@ class AuthController {
             const {name, surname, email, phone, password} = req.body
             const createdUser = await authService.signUp(name, surname, email, phone, password)
             res.cookie('refreshToken', createdUser.refreshToken, {maxAge: 30 * 24 * 60 * 60 * 1000, httpOnly: true})
-            return res.json({user: createdUser.user, accessToken: createdUser.accessToken})
+            return res.json({accessToken: createdUser.accessToken, user: createdUser.user})
         } catch (e) {
             return next(e)
         }
@@ -18,8 +17,9 @@ class AuthController {
     async signIn(req, res, next) {
         try {
             const {email, password} = req.body
-            const logginedUser = await authService.signIn(email, password)
-            return res.json({accessToken: logginedUser.accessToken, user: logginedUser.user})
+            const account = await authService.signIn(email, password)
+            res.cookie('refreshToken', account.refreshToken, {maxAge: 30 * 24 * 60 * 60 * 1000, httpOnly: true})
+            return res.json({accessToken: account.accessToken, user: account.user})
 
         } catch (e) {
             return next(e)
@@ -39,7 +39,10 @@ class AuthController {
 
     async refresh(req, res, next) {
         try {
-
+            const {refreshToken} = req.cookies
+            const tokens = await tokenService.refresh(refreshToken)
+            res.cookie('refreshToken', tokens.refreshToken, {maxAge: 30 * 24 * 60 * 60 * 1000, httpOnly: true})
+            return res.json({success: true, refreshToken: tokens.refreshToken})
         } catch (e) {
             return next(e)
         }

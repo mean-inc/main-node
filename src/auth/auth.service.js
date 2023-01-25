@@ -1,5 +1,5 @@
 import {UserModel} from '../user/user.model.js'
-import {ApiError} from "../error/index.js";
+import {ApiError} from "../error/error.api.js";
 import bcrypt from 'bcrypt'
 import tokenService from "../token/token.service.js";
 import {UserDto} from "../user/user.dto.js";
@@ -37,19 +37,18 @@ class AuthService {
         const {accessToken, refreshToken} = tokenService.generateJwtTokens({...userDto})
         await tokenService.saveTokens(user.id, refreshToken)
 
-        return {accessToken, refreshToken, isExistUser: user}
+        return {accessToken, refreshToken, user}
 
     }
 
     async logout(email) {
         const user = await UserModel.findOne({where: {email}})
         const token = await TokenModel.findOne({where: {userId: user.id}})
-        token.refreshtoken = null
+        if (!user || !token) {
+            throw ApiError.unAuthorized('Logout successfully')
+        }
+        token.refreshToken = null
         await token.save()
-    }
-
-    async refresh() {
-
     }
 }
 
