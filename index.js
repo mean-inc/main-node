@@ -2,7 +2,7 @@ import express from 'express'
 import dotenv from 'dotenv'
 import scheme from "./database/scheme.js";
 import routes from "./src/routes.js";
-import errorMiddleware from "./src/error/error.middleware.js";
+import errorMiddleware from "./src/errors/error.middleware.js";
 import cookieParser from "cookie-parser";
 dotenv.config()
 

@@ -2,7 +2,7 @@ import scheme from "../../database/scheme.js";
 import {DataTypes} from "sequelize";
 import {BasketDeviceModel} from "../basket/basket.model.js";
 
-export const DeviceModel = scheme.define('device', {
+export const DevicesModel = scheme.define('device', {
     id: {
         type: DataTypes.INTEGER,
         primaryKey: true,
@@ -33,8 +33,13 @@ export const DeviceModel = scheme.define('device', {
     typeId: {
         type: DataTypes.INTEGER,
         allowNull: false
-    }
+    },
+    amount: {
+        type: DataTypes.INTEGER,
+        allowNull: false,
+        defaultValue: 1
+    },
 })
 
-DeviceModel.hasOne(BasketDeviceModel)
-BasketDeviceModel.belongsTo(DeviceModel)
+DevicesModel.hasOne(BasketDeviceModel)
+BasketDeviceModel.belongsTo(DevicesModel)

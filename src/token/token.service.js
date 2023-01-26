@@ -2,9 +2,9 @@ import jwt from "jsonwebtoken";
 import TokenModel from "./token.model.js";
 import * as uuid from "uuid";
 import tokenModel from "./token.model.js";
-import {ApiError} from "../error/error.api.js";
-import {UserDto} from "../user/user.dto.js";
-import {UserModel} from "../user/user.model.js";
+import {ApiError} from "../errors/error.api.js";
+import {UsersDto} from "../users/user.dto.js";
+import {UsersModel} from "../users/user.model.js";
 
 class TokenService {
     generateJwtTokens(payload) {
@@ -33,8 +33,8 @@ class TokenService {
         if (!validToken || !schemaToken) {
             throw ApiError.unAuthorized('Logout successfully!')
         }
-        const user = await UserModel.findByPk(validToken.id)
-        const userDto = new UserDto(user)
+        const user = await UsersModel.findByPk(validToken.id)
+        const userDto = new UsersDto(user)
         const tokens = this.generateJwtTokens({...userDto})
         await this.saveTokens(userDto.id, tokens.refreshToken)
         return tokens

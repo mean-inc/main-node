@@ -1,6 +1,6 @@
 import scheme from "../../database/scheme.js";
 import {DataTypes} from "sequelize";
-import {UserModel} from "../user/user.model.js";
+import {UsersModel} from "../users/user.model.js";
 
 export const BasketModel = scheme.define('basket', {
     id: {
@@ -37,8 +37,8 @@ export const BasketDeviceModel = scheme.define('basketDevice', {
     }
 })
 
-BasketModel.hasOne(UserModel)
-UserModel.belongsTo(BasketModel)
+BasketModel.hasOne(UsersModel)
+UsersModel.belongsTo(BasketModel)
 
 BasketModel.hasMany(BasketDeviceModel)
 BasketDeviceModel.belongsTo(BasketModel)
