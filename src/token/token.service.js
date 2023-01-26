@@ -3,8 +3,8 @@ import TokenModel from "./token.model.js";
 import * as uuid from "uuid";
 import tokenModel from "./token.model.js";
 import {ApiError} from "../errors/error.api.js";
-import {UsersDto} from "../users/user.dto.js";
-import {UsersModel} from "../users/user.model.js";
+import {UsersDto} from "../users/users.dto.js";
+import {UsersModel} from "../users/users.model.js";
 
 class TokenService {
     generateJwtTokens(payload) {

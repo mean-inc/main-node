@@ -1,9 +1,10 @@
-import {UsersModel} from '../users/user.model.js'
+import {UsersModel} from '../users/users.model.js'
 import {ApiError} from "../errors/error.api.js";
 import bcrypt from 'bcrypt'
 import tokenService from "../token/token.service.js";
-import {UsersDto} from "../users/user.dto.js";
+import {UsersDto} from "../users/users.dto.js";
 import TokenModel from "../token/token.model.js";
+import {BasketsModel} from "../baskets/baskets.model.js";
 
 class AuthService {
     async signUp(name, surname, email, phone, password) {
@@ -15,6 +16,11 @@ class AuthService {
         const user = await UsersModel.create({
             name, surname, email, phone, password: hashPassword
         })
+
+        const basket = await BasketsModel.create({userId: user.id})
+        user.basketId = basket.id
+        await user.save()
+
         const userDto = new UsersDto(user)
 
         const {accessToken, refreshToken} = tokenService.generateJwtTokens({...userDto})

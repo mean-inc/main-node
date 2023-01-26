@@ -1,20 +1,18 @@
 import scheme from "../../database/scheme.js";
 import {DataTypes} from "sequelize";
 
-const TokenModel = scheme.define('tokens', {
+export const ImagesModel = scheme.define('images', {
     id: {
         type: DataTypes.INTEGER,
+        primaryKey: true,
         autoIncrement: true,
-        allowNull: false,
-        primaryKey: true
+        allowNull: false
     },
-    refreshToken: {
-        type: DataTypes.STRING
-    },
-    emailToken: {
+    name: {
         type: DataTypes.STRING,
         allowNull: false
-    }
+    },
+}, {
+    createdAt: false,
+    updatedAt: false
 })
-
-export default TokenModel
