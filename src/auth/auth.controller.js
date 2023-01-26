@@ -1,5 +1,5 @@
 import authService from "./auth.service.js";
-import tokenService from "../token/token.service.js";
+import tokenService from "../tokens/tokens.service.js";
 
 class AuthController {
 

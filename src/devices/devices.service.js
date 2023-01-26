@@ -2,7 +2,11 @@ import {DevicesModel} from "./devices.model.js";
 
 class DevicesService {
 
-    async getAllDevices() {
+    async getAllDevices(typeId) {
+        if (typeId) {
+            const devices = await DevicesModel.findAll({where: {typeId}})
+            return devices
+        }
         const devices = await DevicesModel.findAll()
         return devices
     }

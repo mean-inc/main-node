@@ -1,9 +1,9 @@
 import {UsersModel} from '../users/users.model.js'
 import {ApiError} from "../errors/error.api.js";
 import bcrypt from 'bcrypt'
-import tokenService from "../token/token.service.js";
+import tokenService from "../tokens/tokens.service.js";
 import {UsersDto} from "../users/users.dto.js";
-import TokenModel from "../token/token.model.js";
+import TokensModel from "../tokens/tokens.model.js";
 import {BasketsModel} from "../baskets/baskets.model.js";
 
 class AuthService {
@@ -49,7 +49,7 @@ class AuthService {
 
     async logout(email) {
         const user = await UsersModel.findOne({where: {email}})
-        const token = await TokenModel.findOne({where: {userId: user.id}})
+        const token = await TokensModel.findOne({where: {userId: user.id}})
         if (!user || !token) {
             throw ApiError.unAuthorized('Logout successfully')
         }

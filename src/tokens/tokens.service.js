@@ -1,12 +1,12 @@
 import jwt from "jsonwebtoken";
-import TokenModel from "./token.model.js";
+import TokensModel from "./tokens.model.js";
 import * as uuid from "uuid";
-import tokenModel from "./token.model.js";
+import tokenModel from "./tokens.model.js";
 import {ApiError} from "../errors/error.api.js";
 import {UsersDto} from "../users/users.dto.js";
 import {UsersModel} from "../users/users.model.js";
 
-class TokenService {
+class TokensService {
     generateJwtTokens(payload) {
         const accessToken = jwt.sign(payload, process.env.SECRET_ACCESS_TOKEN, {expiresIn: '15m'})
         const refreshToken = jwt.sign(payload, process.env.SECRET_REFRESH_TOKEN, {expiresIn: '30d'})
@@ -17,9 +17,9 @@ class TokenService {
     }
 
     async saveTokens(userId, refreshToken, emailToken) {
-        const user = await TokenModel.findOne({where: {id: userId}})
+        const user = await TokensModel.findOne({where: {id: userId}})
         if (!user) {
-            const result = await TokenModel.create({userId, refreshToken, emailToken})
+            const result = await TokensModel.create({userId, refreshToken, emailToken})
             return result
         }
         user.refreshToken = refreshToken
@@ -29,7 +29,7 @@ class TokenService {
     async refresh(refreshToken) {
         const validToken = this.validateToken(refreshToken, process.env.SECRET_REFRESH_TOKEN)
         const schemaToken = await tokenModel.findOne({where: {refreshToken}})
-        console.log(`schemaToken : ${schemaToken}`)
+
         if (!validToken || !schemaToken) {
             throw ApiError.unAuthorized('Logout successfully!')
         }
@@ -51,4 +51,4 @@ class TokenService {
     }
 }
 
-export default new TokenService
+export default new TokensService

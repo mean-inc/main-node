@@ -14,6 +14,3 @@ export const BasketsModel = scheme.define('basket', {
         allowNull: false,
     }
 })
-
-BasketsModel.hasOne(UsersModel)
-UsersModel.belongsTo(BasketsModel)

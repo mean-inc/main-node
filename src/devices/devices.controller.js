@@ -4,7 +4,8 @@ class DevicesController {
 
     async getAllDevices(req, res, next) {
         try {
-            const devices = await devicesService.getAllDevices()
+            const {typeId} = req.query
+            const devices = await devicesService.getAllDevices(typeId)
             return res.json({success: true, devices})
         } catch (e) {
             return next(e)

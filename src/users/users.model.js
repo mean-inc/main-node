@@ -1,6 +1,8 @@
 import scheme from "../../database/scheme.js";
 import {DataTypes} from "sequelize";
-import TokenModel from "../token/token.model.js";
+import TokensModel from "../tokens/tokens.model.js";
+import {RateDevicesModel} from "../rates/rates.model.js";
+import {BasketsModel} from "../baskets/baskets.model.js";
 
 export const UsersModel = await scheme.define('users', {
     id: {
@@ -36,5 +38,11 @@ export const UsersModel = await scheme.define('users', {
     }
 })
 
-UsersModel.hasOne(TokenModel)
-TokenModel.belongsTo(UsersModel)
+UsersModel.hasOne(TokensModel)
+TokensModel.belongsTo(UsersModel)
+
+UsersModel.hasMany(RateDevicesModel)
+RateDevicesModel.belongsTo(UsersModel)
+
+BasketsModel.hasOne(UsersModel)
+UsersModel.belongsTo(BasketsModel)

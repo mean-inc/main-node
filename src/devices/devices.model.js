@@ -4,6 +4,7 @@ import {TypesModel} from "../types/types.model.js";
 import {ImageDevicesModel} from "../images/image-devices.model.js";
 import {ImagesModel} from "../images/images.model.js";
 import {BasketDeviceModel} from "../baskets/basket-devices.model.js";
+import {RateDevicesModel} from "../rates/rates.model.js";
 
 export const DevicesModel = scheme.define('device', {
     id: {
@@ -12,7 +13,11 @@ export const DevicesModel = scheme.define('device', {
         autoIncrement: true,
         allowNull: false
     },
-    name: {
+    title: {
+        type: DataTypes.STRING,
+        allowNull: false
+    },
+    description: {
         type: DataTypes.STRING,
         allowNull: false
     },
@@ -24,14 +29,6 @@ export const DevicesModel = scheme.define('device', {
         type: DataTypes.INTEGER,
         allowNull: false,
         defaultValue: 0
-    },
-    title: {
-        type: DataTypes.STRING,
-        allowNull: false
-    },
-    description: {
-        type: DataTypes.STRING,
-        allowNull: false
     },
     typeId: {
         type: DataTypes.INTEGER,
