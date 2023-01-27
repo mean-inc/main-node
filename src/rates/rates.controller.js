@@ -7,9 +7,10 @@ class RatesController {
         try {
             const {deviceId} = req.params
             const {rating} = req.body
-            const payload = tokensService.getPayloadByReq(req)
-            console.log(payload)
+            const token = req.headers.authorization.split(' ')[1]
+            const payload = tokensService.validateToken(token, process.env.SECRET_ACCESS_TOKEN)
             const device = await ratesService.setRating(payload.id, deviceId, rating)
+            return res.json({device})
         } catch (e) {
             return next(e)
         }
