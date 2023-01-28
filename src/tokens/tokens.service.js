@@ -8,7 +8,7 @@ import {UsersModel} from "../users/users.model.js";
 
 class TokensService {
     generateJwtTokens(payload) {
-        const accessToken = jwt.sign(payload, process.env.SECRET_ACCESS_TOKEN, {expiresIn: '15m'})
+        const accessToken = jwt.sign(payload, process.env.SECRET_ACCESS_TOKEN, {expiresIn: '30d'})
         const refreshToken = jwt.sign(payload, process.env.SECRET_REFRESH_TOKEN, {expiresIn: '30d'})
         return {
             accessToken,
@@ -27,6 +27,9 @@ class TokensService {
     }
 
     async refresh(refreshToken) {
+        if (!refreshToken) {
+            throw ApiError.unAuthorized('Logout successfully!')
+        }
         const validToken = this.validateToken(refreshToken, process.env.SECRET_REFRESH_TOKEN)
         const schemaToken = await tokenModel.findOne({where: {refreshToken}})
 
