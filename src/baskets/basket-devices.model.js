@@ -2,7 +2,7 @@ import scheme from "../../database/scheme.js";
 import {DataTypes} from "sequelize";
 import {BasketsModel} from "./baskets.model.js";
 
-export const BasketDeviceModel = scheme.define('basket-devices', {
+export const BasketDeviceModel = scheme.define('basket_devices', {
     id: {
         type: DataTypes.INTEGER,
         allowNull: false,

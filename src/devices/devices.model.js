@@ -4,7 +4,7 @@ import {TypesModel} from "../types/types.model.js";
 import {ImageDevicesModel} from "../images/image-devices.model.js";
 import {ImagesModel} from "../images/images.model.js";
 import {BasketDeviceModel} from "../baskets/basket-devices.model.js";
-import {RateDevicesModel} from "../rates/rates.model.js";
+import {RateDevicesModel} from "../rates/rate-devices.model.js";
 
 export const DevicesModel = scheme.define('device', {
     id: {

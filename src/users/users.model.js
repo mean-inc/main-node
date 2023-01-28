@@ -1,7 +1,7 @@
 import scheme from "../../database/scheme.js";
 import {DataTypes} from "sequelize";
 import TokensModel from "../tokens/tokens.model.js";
-import {RateDevicesModel} from "../rates/rates.model.js";
+import {RateDevicesModel} from "../rates/rate-devices.model.js";
 import {BasketsModel} from "../baskets/baskets.model.js";
 
 export const UsersModel = await scheme.define('users', {
