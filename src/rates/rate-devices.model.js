@@ -2,7 +2,7 @@ import scheme from "../../database/scheme.js";
 import {DataTypes} from "sequelize";
 import {DevicesModel} from "../devices/devices.model.js";
 
-export const RateDevicesModel = scheme.define('rate-devices', {
+export const RateDevicesModel = scheme.define('rate_devices', {
     id: {
         type: DataTypes.INTEGER,
         primaryKey: true,
