@@ -47,10 +47,10 @@ class AuthService {
 
     }
 
-    async logout(email) {
-        const user = await UsersModel.findOne({where: {email}})
-        const token = await TokensModel.findOne({where: {userId: user.id}})
-        if (!user || !token) {
+    async logout(refreshToken) {
+        // const user = await UsersModel.findOne({where: {email}})
+        const token = await TokensModel.findOne({where: {refreshToken}})
+        if (!token) {
             throw ApiError.unAuthorized('Logout successfully')
         }
         token.refreshToken = null

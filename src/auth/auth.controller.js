@@ -28,8 +28,9 @@ class AuthController {
 
     async logout(req, res, next) {
         try {
-            const {email} = req.body
-            await authService.logout(email)
+            // const {email} = req.body
+            const {refreshToken} = req.cookies
+            await authService.logout(refreshToken)
             res.clearCookie('refreshToken')
             return res.json({success: true, message: "Logout successfully!"})
         } catch (e) {
@@ -42,7 +43,7 @@ class AuthController {
             const {refreshToken} = req.cookies
             const tokens = await tokenService.refresh(refreshToken)
             res.cookie('refreshToken', tokens.refreshToken, {maxAge: 30 * 24 * 60 * 60 * 1000, httpOnly: true})
-            return res.json({success: true, refreshToken: tokens.refreshToken})
+            return res.json({success: true, tokens})
         } catch (e) {
             return next(e)
         }
