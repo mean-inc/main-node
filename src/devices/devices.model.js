@@ -30,10 +30,6 @@ export const DevicesModel = scheme.define('device', {
         allowNull: false,
         defaultValue: 0
     },
-    typeId: {
-        type: DataTypes.INTEGER,
-        allowNull: false
-    },
     amount: {
         type: DataTypes.INTEGER,
         allowNull: false,
@@ -44,8 +40,8 @@ export const DevicesModel = scheme.define('device', {
 DevicesModel.hasOne(BasketDeviceModel)
 BasketDeviceModel.belongsTo(DevicesModel)
 
-DevicesModel.hasMany(TypesModel)
-TypesModel.belongsTo(DevicesModel)
+TypesModel.hasMany(DevicesModel)
+DevicesModel.belongsTo(TypesModel)
 
 DevicesModel.belongsToMany(ImagesModel, {through: ImageDevicesModel})
 ImagesModel.belongsToMany(DevicesModel, {through: ImageDevicesModel})

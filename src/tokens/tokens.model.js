@@ -11,7 +11,7 @@ const TokensModel = scheme.define('tokens', {
     refreshToken: {
         type: DataTypes.STRING
     },
-    emailToken: {
+    mailToken: {
         type: DataTypes.STRING,
         allowNull: false
     }
