@@ -2,6 +2,10 @@ import nodemailer from "nodemailer";
 import TokensModel from "../tokens/tokens.model.js";
 import {ApiError} from "../errors/error.api.js";
 import {UsersModel} from "../users/users.model.js";
+import dotenv from 'dotenv'
+import tokensService from "../tokens/tokens.service.js";
+import {UsersDto} from "../users/users.dto.js";
+dotenv.config()
 
 class MailsService {
     constructor() {
@@ -9,7 +13,6 @@ class MailsService {
         this.transport = nodemailer.createTransport({
             host: process.env.MAIL_HOST,
             port: process.env.MAIL_PORT,
-            secure: false,
             auth: {
                 user: process.env.MAIL_LOGIN,
                 pass: process.env.MAIL_PASSWORD,
@@ -21,11 +24,12 @@ class MailsService {
         await this.transport.sendMail({
             from: process.env.MAIL_LOGIN,
             to,
-            subject: '',
+            subject: 'Activate mail',
             html:
                 `
                 <div>
-                    <h1>Активация почты. Перейдите по ссылке: <a href="${link}">${link}</a> </h1>
+                    <h1>Активация почты. Перейдите по ссылке:</h1>
+                    <a href="${link}">${link}</a>
                 </div>
             `
         })
@@ -51,12 +55,20 @@ class MailsService {
             throw ApiError.badRequest('Don\'t find user')
         }
 
-        const mailToken = await TokensModel.findOne({where: {userId: user.id}})
-        if (!mailToken) {
-            throw ApiError.badRequest('Incorrect link')
+        const tokens = await TokensModel.findOne({where: {userId: user.id}})
+        if (tokens) {
+            const link = process.env.API_DOMAIN + `api/mails/activate/${tokens.mailToken}`
+            return link
         }
 
-        const link = process.env.API_DOMAIN + `mail/activate/${mailToken}`
+        const userDto = new UsersDto(user)
+        const jwtTokens = tokensService.generateJwtTokens(...userDto)
+        const mailToken = tokensService.generateMailToken()
+        await TokensModel.create({
+            accessToken: jwtTokens.accessToken, refreshToken: jwtTokens.refreshToken, mailToken
+        })
+        const link = process.env.API_DOMAIN + `api/mails/activate/${tokens.mailToken}`
+
         return link
     }
 }

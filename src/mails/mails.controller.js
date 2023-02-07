@@ -1,7 +1,4 @@
 import mailsService from "./mails.service.js";
-import {UsersModel} from "../users/users.model.js";
-import TokensModel from "../tokens/tokens.model.js";
-import {ApiError} from "../errors/error.api.js";
 
 class MailsController {
 
@@ -9,8 +6,8 @@ class MailsController {
         try {
             const {email} = req.body
             const link = await mailsService.getActivateLinkByEmail(email)
-            const mail = await mailsService.sendActivateMail(email, link)
-            return res.json({mail})
+            await mailsService.sendActivateMail(email, link)
+            return res.json({success: true, message: "Mail send successfully"})
         } catch(e) {
             next(e)
         }
@@ -19,8 +16,8 @@ class MailsController {
     async activateAccount(req, res, next) {
         try {
             const {link} = req.params
-            const user = await mailsService.activateMail(link)
-            return res.json({user})
+            await mailsService.activateMail(link)
+            return res.redirect('https://youtube.com/')
         } catch(e) {
             next(e)
         }

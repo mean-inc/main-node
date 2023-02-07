@@ -1,0 +1,50 @@
+{
+  "info": {
+    "description": "REST API docs for Mean-Shop",
+    "version": "1.0.0",
+    "title": "Mean-Shop docs"
+  },
+  "basePath": "http://localhost:5000/",
+  "paths": {
+    "/api/auth/signup": {
+      "post": {
+        "tags": ["Auth"],
+        "summary": "Create user account",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "name": "sdfdsf",
+                "surname": "sdfdsf",
+                "phone": "sdfdsf",
+                "email": "sdfdsf"
+              }
+          }
+        }
+        },
+        "parameters": [{
+          "name": "asd",
+          "in": "body",
+          "required": true,
+          "schema": {
+            "type": "string"
+          }
+        }, {
+          "name": "surname",
+          "in": "body",
+          "required": true,
+          "schema": {
+            "type": "string"
+          }
+        }
+        ],
+        "responses": {
+          "200": {
+            "description": "User was created successfully!"
+          }
+        }
+      }
+    }
+  },
+  "openapi": "3.0.0"
+}
