@@ -16,10 +16,10 @@ class TokensService {
         }
     }
 
-    async saveTokens(userId, refreshToken, emailToken) {
-        const user = await TokensModel.findOne({where: {id: userId}})
+    async saveTokens(userId, refreshToken, mailToken) {
+        const user = await TokensModel.findOne({where: {userId}})
         if (!user) {
-            const result = await TokensModel.create({userId, refreshToken, emailToken})
+            const result = await TokensModel.create({userId, refreshToken, mailToken})
             return result
         }
         user.refreshToken = refreshToken
@@ -43,7 +43,7 @@ class TokensService {
         return tokens
     }
 
-    generateEmailToken() {
+    generateMailToken() {
         const emailToken = uuid.v4()
         return emailToken
     }
