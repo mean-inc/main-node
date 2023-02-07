@@ -10,7 +10,7 @@ class BasketsController {
             !amount ? amount = 1 : amount
             amount < 0 ? amount = 1 : amount
             if (!deviceId) {
-                return ApiError.badRequest('Please, enter the field deviceId')
+                throw ApiError.badRequest('Please, enter the field deviceId')
             }
             const token = req.headers.authorization.split(' ')[1]
             const user = tokensService.validateToken(token, process.env.SECRET_ACCESS_TOKEN)
