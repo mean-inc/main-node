@@ -43,6 +43,18 @@ class BasketsController {
             next(e)
         }
     }
+
+    async removeDeviceFromBasket(req, res, next) {
+        try {
+            const {deviceId} = req.params
+            const token = req.headers.authorization.split(' ')[1]
+            const user = tokensService.validateToken(token, process.env.SECRET_ACCESS_TOKEN)
+            const removeDevice = await basketsService.removeDeviceFromBasket(user.id, deviceId)
+            return res.json({success: true, message: 'Device was removed', removeDevice})
+        } catch (e) {
+            next(e)
+        }
+    }
 }
 
 export default new BasketsController()

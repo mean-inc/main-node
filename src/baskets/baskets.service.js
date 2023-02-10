@@ -50,6 +50,15 @@ class BasketsService {
         const userBasket = await BasketsModel.findOne({where: {userId}})
         return userBasket
     }
+
+    async removeDeviceFromBasket(userId, deviceId) {
+        const basket = await this.getBasketByUserId(userId)
+        const isExistDevice = await BasketDeviceModel.findOne({where: {deviceId, basketId: basket.id}})
+        if (!isExistDevice)
+            throw ApiError.badRequest('Device isn\'t exist')
+        const device = await BasketDeviceModel.destroy({where: {deviceId, basketId: basket.id}})
+        return device
+    }
 }
 
 export default new BasketsService()
