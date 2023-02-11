@@ -22,6 +22,11 @@ class UsersService {
         await user.save()
         return user
     }
+
+    async findUserById(userId) {
+        const user = await UsersModel.findOne({where: {id: userId}})
+        return user
+    }
 }
 
 export default new UsersService()

@@ -6,3 +6,5 @@ const ordersRouter = new Router()
 ordersRouter.post('/', ordersController.createOrder)
 ordersRouter.get('/', ordersController.getAllOrders)
 ordersRouter.get('/:orderId', ordersController.getOrderById)
+
+export default ordersRouter

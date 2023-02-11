@@ -18,7 +18,6 @@ class AuthService {
             name, surname, email, phone, password: hashPassword
         })
 
-        const basket = await BasketsModel.create({userId: user.id})
         user.basketId = basket.id
         await user.save()
 

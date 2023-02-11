@@ -5,6 +5,7 @@ import {ImageDevicesModel} from "../images/image-devices.model.js";
 import {ImagesModel} from "../images/images.model.js";
 import {BasketDeviceModel} from "../baskets/basket-devices.model.js";
 import {OrdersModel} from "../orders/orders.model.js";
+import {OrderDevicesModel} from "../orders/order-devices.model.js";
 
 export const DevicesModel = scheme.define('device', {
     id: {
@@ -46,5 +47,5 @@ DevicesModel.belongsTo(TypesModel)
 DevicesModel.belongsToMany(ImagesModel, {through: ImageDevicesModel})
 ImagesModel.belongsToMany(DevicesModel, {through: ImageDevicesModel})
 
-DevicesModel.hasMany(OrdersModel)
-OrdersModel.belongsTo(DevicesModel)
+DevicesModel.hasMany(OrderDevicesModel)
+OrderDevicesModel.belongsTo(DevicesModel)
