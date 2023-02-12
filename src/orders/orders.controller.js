@@ -38,6 +38,19 @@ class OrdersController {
             next(e)
         }
     }
+
+    async payment(req, res, next) {
+        try {
+            const {orderId} = req.params
+            const token = req.headers.authorization.split(' ')[1]
+            const user = await tokensService.validateToken(token, process.env.SECRET_ACCESS_TOKEN)
+            const payment = await ordersService.payment(user.id, orderId)
+
+            return res.json({success: true, payment})
+        } catch (e) {
+            next(e)
+        }
+    }
 }
 
 export default new OrdersController()

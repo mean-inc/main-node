@@ -16,8 +16,8 @@ class OrdersService {
 
     async getOrderById(userId, orderId) {
         const basket = await basketsService.getBasketByUserId(userId)
-        const orders = await OrdersModel.findOne({where: {basketId: basket.id, id: orderId}})
-        return orders
+        const order = await OrdersModel.findOne({where: {basketId: basket.id, id: orderId}})
+        return order
     }
 
     async createOrder(userId) {
@@ -48,12 +48,20 @@ class OrdersService {
         }
 
         await basketsService.clearBasket(userId)
+        return order
+    }
 
-        // for (const basketDevice of basketDevices) {
-        //     const sum = basketDevice.amount * basketDevice.price
-        //     await OrderDevicesModel.create({basketDevice.})
-        //     // console.log(basketDevice.id)
-        // }
+    async payment(userId, orderId) {
+        const order = await this.getOrderById(userId, orderId)
+        if (!order)
+            throw ApiError.badRequest('Order don\'t exist')
+
+        if (!order.isPaid)
+            order.isPaid = true
+        else
+            throw ApiError.badRequest('This order has a payment')
+
+        await order.save()
         return order
     }
 }
