@@ -26,8 +26,8 @@ app.use(errorMiddleware)
 
 const startApp = async () => {
     try {
-        await scheme.authenticate()
-        await scheme.sync()
+        // await scheme.authenticate()
+        // await scheme.sync()
         app.listen(PORT, () => console.log(`Server started on PORT: ${PORT}`))
     } catch (e) {
         console.log(e);
