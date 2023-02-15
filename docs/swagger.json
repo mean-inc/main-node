@@ -4,7 +4,7 @@
     "version": "1.0.0",
     "title": "Mean-Shop docs"
   },
-  "host": "localhost:5000",
+  "host": "api-meanshop.onrender.com",
   "paths": {
     "/api/auth/signup": {
       "post": {
