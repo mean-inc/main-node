@@ -13,11 +13,10 @@ export const TypesModel = scheme.define('types', {
         type: DataTypes.STRING,
         allowNull: false
     },
-    imageId: {
-        type: DataTypes.INTEGER,
-        allowNull: true
-    }
 },{
     createdAt: false,
     updatedAt: false
 })
+
+ImagesModel.hasOne(TypesModel)
+TypesModel.belongsTo(ImagesModel)

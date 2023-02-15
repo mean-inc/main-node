@@ -10,7 +10,7 @@ class BasketsController {
             !amount ? amount = 1 : amount
             amount < 0 ? amount = 1 : amount
             if (!deviceId) {
-                return ApiError.badRequest('Please, enter the field deviceId')
+                throw ApiError.badRequest('Please, enter the field deviceId')
             }
             const token = req.headers.authorization.split(' ')[1]
             const user = tokensService.validateToken(token, process.env.SECRET_ACCESS_TOKEN)
@@ -39,6 +39,18 @@ class BasketsController {
             const user = tokensService.validateToken(token, process.env.SECRET_ACCESS_TOKEN)
             const basketDevices = await basketsService.getAllBasketDevices(user.id)
             return res.json({success: true, basketDevices})
+        } catch (e) {
+            next(e)
+        }
+    }
+
+    async removeDeviceFromBasket(req, res, next) {
+        try {
+            const {deviceId} = req.params
+            const token = req.headers.authorization.split(' ')[1]
+            const user = tokensService.validateToken(token, process.env.SECRET_ACCESS_TOKEN)
+            const removeDevice = await basketsService.removeDeviceFromBasket(user.id, deviceId)
+            return res.json({success: true, message: 'Device was removed', removeDevice})
         } catch (e) {
             next(e)
         }

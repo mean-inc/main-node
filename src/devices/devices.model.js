@@ -4,7 +4,8 @@ import {TypesModel} from "../types/types.model.js";
 import {ImageDevicesModel} from "../images/image-devices.model.js";
 import {ImagesModel} from "../images/images.model.js";
 import {BasketDeviceModel} from "../baskets/basket-devices.model.js";
-import {RateDevicesModel} from "../rates/rate-devices.model.js";
+import {OrdersModel} from "../orders/orders.model.js";
+import {OrderDevicesModel} from "../orders/order-devices.model.js";
 
 export const DevicesModel = scheme.define('device', {
     id: {
@@ -30,10 +31,6 @@ export const DevicesModel = scheme.define('device', {
         allowNull: false,
         defaultValue: 0
     },
-    typeId: {
-        type: DataTypes.INTEGER,
-        allowNull: false
-    },
     amount: {
         type: DataTypes.INTEGER,
         allowNull: false,
@@ -44,8 +41,11 @@ export const DevicesModel = scheme.define('device', {
 DevicesModel.hasOne(BasketDeviceModel)
 BasketDeviceModel.belongsTo(DevicesModel)
 
-DevicesModel.hasMany(TypesModel)
-TypesModel.belongsTo(DevicesModel)
+TypesModel.hasMany(DevicesModel)
+DevicesModel.belongsTo(TypesModel)
 
 DevicesModel.belongsToMany(ImagesModel, {through: ImageDevicesModel})
 ImagesModel.belongsToMany(DevicesModel, {through: ImageDevicesModel})
+
+DevicesModel.hasMany(OrderDevicesModel)
+OrderDevicesModel.belongsTo(DevicesModel)

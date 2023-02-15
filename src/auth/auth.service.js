@@ -5,6 +5,7 @@ import tokenService from "../tokens/tokens.service.js";
 import {UsersDto} from "../users/users.dto.js";
 import TokensModel from "../tokens/tokens.model.js";
 import {BasketsModel} from "../baskets/baskets.model.js";
+import mailsService from "../mails/mails.service.js";
 
 class AuthService {
     async signUp(name, surname, email, phone, password) {
@@ -17,16 +18,17 @@ class AuthService {
             name, surname, email, phone, password: hashPassword
         })
 
-        const basket = await BasketsModel.create({userId: user.id})
         user.basketId = basket.id
         await user.save()
 
         const userDto = new UsersDto(user)
 
         const {accessToken, refreshToken} = tokenService.generateJwtTokens({...userDto})
-        const emailToken = tokenService.generateEmailToken()
+        const mailToken = tokenService.generateMailToken()
+        const link = process.env.API_DOMAIN + 'api/mails/' + mailToken
+        await mailsService.sendActivateMail(email, link)
 
-        await tokenService.saveTokens(user.id, refreshToken, emailToken)
+        await tokenService.saveTokens(user.id, refreshToken, mailToken)
         return {accessToken, refreshToken, user}
     }
 
@@ -44,7 +46,6 @@ class AuthService {
         await tokenService.saveTokens(user.id, refreshToken)
 
         return {accessToken, refreshToken, user}
-
     }
 
     async logout(refreshToken) {

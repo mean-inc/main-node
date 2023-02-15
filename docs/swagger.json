@@ -1,0 +1,333 @@
+{
+  "info": {
+    "description": "REST API docs for Mean-Shop",
+    "version": "1.0.0",
+    "title": "Mean-Shop docs"
+  },
+  "host": "localhost:5000",
+  "paths": {
+    "/api/auth/signup": {
+      "post": {
+        "tags": ["Auth"],
+        "summary": "Create user account",
+        "parameters": [{
+          "in": "body",
+          "name": "signup",
+          "required": true,
+          "schema": {
+            "type": "object",
+            "properties": {
+              "name": {
+                "type": "string",
+                "example": "Sasha"
+              },
+              "surname": {
+                "type": "string",
+                "example": "XXX"
+              },
+              "phone": {
+                "type": "string",
+                "example": "+380551231231"
+              },
+              "email": {
+                "type": "string",
+                "example": "sname.parser123@gmail.com"
+              },
+              "password": {
+                "type": "string",
+                "example": "123"
+              }
+            }
+          }
+        }],
+        "responses": {
+          "200": {
+            "description": "User was created successfully!"
+          }
+        }
+      }
+    },
+    "/api/auth/signin": {
+      "post": {
+        "tags": ["Auth"],
+        "summary": "Login into user account",
+        "parameters": [{
+          "in": "body",
+          "name": "signin",
+          "required": true,
+          "schema": {
+            "type": "object",
+            "properties": {
+              "email": {
+                "type": "string",
+                "example": "sname.parser123@gmail.com"
+              },
+              "password": {
+                "type": "string",
+                "example": "123"
+              }
+            }
+          }
+        }],
+        "responses": {
+          "200": {
+            "description": "User was signed successfully!"
+          }
+        }
+      }
+    },
+    "/api/auth/logout": {
+      "post": {
+        "tags": ["Auth"],
+        "summary": "Logout from user account",
+        "parameters": [{
+          "name": "Bearer",
+          "in": "header",
+          "description": "JWT Refresh Bearer Token",
+          "required": true,
+          "type": "string"
+        }],
+        "responses": {
+          "200": {
+            "description": "User was logout successfully!"
+          }
+        }
+      }
+    },
+    "/api/auth/refresh": {
+      "post": {
+        "tags": ["Auth"],
+        "summary": "Refreshing Token",
+        "parameters": [{
+          "name": "Bearer",
+          "in": "header",
+          "description": "JWT Refresh Bearer Token from cookies",
+          "required": true,
+          "type": "string"
+        }],
+        "responses": {
+          "200": {
+            "description": "Refreshed token"
+          }
+        }
+      }
+    },
+
+    "/api/baskets": {
+      "post": {
+        "tags": ["Baskets"],
+        "summary": "Add device to baskets",
+        "parameters": [{
+          "in": "body",
+          "name": "deviceId",
+          "description": "Required only - deviceId. Amount isn't required",
+          "required": true,
+          "schema": {
+            "type": "object",
+            "properties": {
+              "deviceId": {
+                "type": "number",
+                "example": 1,
+                "required": ["deviceId"]
+              },
+              "amount": {
+                "type": "number",
+                "example": 1
+              }
+            }
+          }
+        }],
+        "responses": {
+          "200": {
+            "description": "Refreshed token"
+          }
+        }
+      },
+      "get": {
+        "tags": ["Baskets"],
+        "summary": "Get devices from basket",
+        "responses": {
+          "200": {
+            "description": "successfully"
+          }
+        }
+      }
+    },
+    "/api/baskets/{deviceId}": {
+      "get": {
+        "tags": ["Baskets"],
+        "summary": "Get device from basket by deviceId",
+        "parameters": [{
+          "in": "path",
+          "name": "deviceId",
+          "required": true,
+          "schema": {
+            "type": "object",
+            "properties": {
+              "deviceId": {
+                "type": "number",
+                "example": 1
+              }
+            }
+          }
+        }],
+        "responses": {
+          "200": {
+            "description": "Successfully!"
+          }
+        }
+      }
+    },
+
+    "/api/devices": {
+      "get": {
+        "tags": ["Devices"],
+        "summary": "Get devices",
+        "responses": {
+          "200": {
+            "description": "Successfully!"
+          }
+        }
+      }
+    },
+    "/api/devices/{deviceId}": {
+      "get": {
+        "tags": ["Devices"],
+        "summary": "Get device by deviceId",
+        "parameters": [{
+          "in": "path",
+          "name": "deviceId",
+          "required": true,
+          "type": "number"
+        }],
+        "responses": {
+          "200": {
+            "description": "Successfully!"
+          }
+        }
+      }
+    },
+
+    "/api/mails/send": {
+      "get": {
+        "tags": ["Mails"],
+        "summary": "Send mail to activate the account",
+        "parameters": [{
+          "in": "body",
+          "name": "email",
+          "required": true,
+          "schema": {
+            "type": "string",
+            "properties": {
+              "email": {
+                "type": "string",
+                "example": "sname.parser123@gmail.com"
+              }
+            }
+          }
+        }],
+        "responses": {
+          "200": {
+            "description": "Successfully!"
+          }
+        }
+      }
+    },
+    "/api/activate/{link}": {
+      "get": {
+        "tags": ["Mails"],
+        "summary": "Activate mail by link",
+        "parameters": [{
+          "in": "path",
+          "name": "link",
+          "required": true,
+          "type": "string"
+        }],
+        "responses": {
+          "200": {
+            "description": "Successfully!"
+          }
+        }
+      }
+    },
+
+    "/api/rates/{deviceId}": {
+      "get": {
+        "tags": ["Rates"],
+        "summary": "Set rating to device by id",
+        "parameters": [{
+          "in": "path",
+          "name": "deviceId",
+          "required": true,
+          "type": "number"
+        }],
+        "responses": {
+          "200": {
+            "description": "Successfully!"
+          }
+        }
+      }
+    },
+
+    "/api/types": {
+      "get": {
+        "tags": ["Types"],
+        "summary": "Get types",
+        "responses": {
+          "200": {
+            "description": "Successfully!"
+          }
+        }
+      }
+    },
+
+    "/api/users/settings": {
+      "put": {
+        "tags": ["Users"],
+        "summary": "Edit settings (email, name, surname, phone, password)",
+        "parameters": [{
+          "type": "string",
+          "name": "settings",
+          "in": "body",
+          "required": true,
+          "schema": {
+            "type": "object",
+            "properties": {
+              "email": {
+                "type": "string",
+                "example": "sname.parser123@gmail.com"
+              },
+              "name": {
+                "type": "string",
+                "example": "XXX"
+              },
+              "surname": {
+                "type": "string",
+                "example": "timberland"
+              },
+              "phone": {
+                "type": "string",
+                "example": "+380554685513"
+              },
+              "password": {
+                "type": "string",
+                "example": "123123"
+              },
+              "confirmPassword": {
+                "type": "string",
+                "example": "123123"
+              }
+            }
+          }
+        }],
+        "responses": {
+          "200": {
+            "description": "Successfully!"
+          }
+        }
+      }
+    }
+  },
+
+  "swagger": "2.0"
+}
