@@ -8,5 +8,11 @@ module.exports = {
     },
     autorestart: true,
     instance: '1',
-  }]
+  }],
+  deploy: {
+    production: {
+      ref: "origin/main",
+      path: "/opt/render/"
+    }
+  }
 }
