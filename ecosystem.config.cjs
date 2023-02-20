@@ -12,7 +12,10 @@ module.exports = {
   deploy: {
     production: {
       ref: "origin/main",
-      path: "/opt/render/"
+      path: "/opt/render/",
+      env: {
+        NODE_ENV: '.env'
+      },
     }
   }
 }
