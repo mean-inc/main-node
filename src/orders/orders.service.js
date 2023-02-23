@@ -3,7 +3,7 @@ import basketsService from "../baskets/baskets.service.js";
 import {BasketDeviceModel} from "../baskets/basket-devices.model.js";
 import {ApiError} from "../errors/error.api.js";
 import scheme from "../../database/scheme.js";
-import {Model, QueryTypes} from "sequelize";
+import {QueryTypes} from "sequelize";
 import {OrderDevicesModel} from "./order-devices.model.js";
 
 class OrdersService {
@@ -20,11 +20,14 @@ class OrdersService {
         return order
     }
 
-    async createOrder(userId) {
+    async createOrder(userId, deliveryType) {
         const basket = await basketsService.getBasketByUserId(userId)
         const basketDevices = await BasketDeviceModel.findAll({where: {basketId: basket.id}})
         if (!basketDevices.length) {
             throw ApiError.badRequest('Basket is empty')
+        }
+        if (!deliveryType) {
+            throw ApiError.badRequest('Field \'deliveryType\' is require')
         }
         let orderDevices = await scheme.query(`
             SELECT devices.price as price, devices.id as deviceId, basket_devices.basketId as basketId, basket_devices.amount as amount
@@ -35,7 +38,7 @@ class OrdersService {
             type: QueryTypes.SELECT,
             raw: true
         })
-        const order = await OrdersModel.create({basketId: basket.id, orderStatusId: 1})
+        const order = await OrdersModel.create({basketId: basket.id, orderStatusId: 1, deliveryType})
         for (const orderDevice of orderDevices) {
             await OrderDevicesModel.create({
                 price: orderDevice.price,
@@ -43,7 +46,7 @@ class OrdersService {
                 basketId: orderDevice.basketId,
                 amount: orderDevice.amount,
                 orderId: order.id,
-                sum: orderDevice.price * orderDevice.amount
+                sum: orderDevice.price * orderDevice.amount,
             })
         }
 

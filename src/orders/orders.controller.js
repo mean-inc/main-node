@@ -5,10 +5,11 @@ class OrdersController {
 
     async createOrder(req, res, next) {
         try {
+            const {deliveryType} = req.body
             const token = req.headers.authorization.split(' ')[1]
             const user = await tokensService.validateToken(token, process.env.SECRET_ACCESS_TOKEN)
             console.log(user)
-            const order = await ordersService.createOrder(user.id)
+            const order = await ordersService.createOrder(user.id, deliveryType)
             return res.json({order})
         } catch(e) {
             next(e)

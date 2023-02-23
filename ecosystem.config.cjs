@@ -3,9 +3,6 @@ module.exports = {
     name   : "api mean-shop",
     script : "./index.js",
     exec_mode : "cluster",
-    env: {
-      NODE_ENV: '.env'
-    },
     autorestart: true,
     instance: '1',
   }],
@@ -16,6 +13,7 @@ module.exports = {
       env: {
         NODE_ENV: '.env'
       },
+      'post-deploy': 'npm i && pm2 start e'
     }
   }
 }

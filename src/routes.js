@@ -7,6 +7,7 @@ import basketsRouter from "./baskets/baskets.router.js";
 import usersRouter from "./users/users.router.js";
 import mailsRouter from "./mails/mails.router.js";
 import ordersRouter from "./orders/orders.router.js";
+import deliveryRouter from "./delivery/delivery.router.js";
 
 const router = new Router()
 
@@ -18,5 +19,6 @@ router.use('/baskets', basketsRouter)
 router.use('/users', usersRouter)
 router.use('/mails', mailsRouter)
 router.use('/orders', ordersRouter)
+router.use('/delivery', deliveryRouter)
 
 export default router
