@@ -20,14 +20,14 @@ class OrdersService {
         return order
     }
 
-    async createOrder(userId, deliveryType) {
+    async createOrder(userId, deliveryTypeId) {
         const basket = await basketsService.getBasketByUserId(userId)
         const basketDevices = await BasketDeviceModel.findAll({where: {basketId: basket.id}})
         if (!basketDevices.length) {
             throw ApiError.badRequest('Basket is empty')
         }
-        if (!deliveryType) {
-            throw ApiError.badRequest('Field \'deliveryType\' is require')
+        if (!deliveryTypeId) {
+            throw ApiError.badRequest('Field \'deliveryTypeId\' is require')
         }
         let orderDevices = await scheme.query(`
             SELECT devices.price as price, devices.id as deviceId, basket_devices.basketId as basketId, basket_devices.amount as amount
@@ -38,7 +38,7 @@ class OrdersService {
             type: QueryTypes.SELECT,
             raw: true
         })
-        const order = await OrdersModel.create({basketId: basket.id, orderStatusId: 1, deliveryType})
+        const order = await OrdersModel.create({basketId: basket.id, orderStatusId: 1, deliveryTypeId})
         for (const orderDevice of orderDevices) {
             await OrderDevicesModel.create({
                 price: orderDevice.price,
