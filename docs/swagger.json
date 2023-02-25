@@ -4,7 +4,7 @@
     "version": "1.0.0",
     "title": "Mean-Shop docs"
   },
-  "host": "api-meanshop.onrender.com",
+  "host": "localhost:5000",
   "paths": {
     "/api/auth/signup": {
       "post": {
@@ -151,6 +151,22 @@
             "description": "successfully"
           }
         }
+      },
+      "delete": {
+        "tags": ["Baskets"],
+        "summary": "Remove device from basket",
+        "parameters": [{
+          "name": "deviceId",
+          "in": "path",
+          "description": "Device ID",
+          "required": true,
+          "type": "number"
+        }],
+        "responses": {
+          "200": {
+            "description": "successfully"
+          }
+        }
       }
     },
     "/api/baskets/{deviceId}": {
@@ -170,6 +186,35 @@
               }
             }
           }
+        }],
+        "responses": {
+          "200": {
+            "description": "Successfully!"
+          }
+        }
+      }
+    },
+
+    "/api/delivery": {
+      "get": {
+        "tags": ["Delivery"],
+        "summary": "Get deliveries",
+        "responses": {
+          "200": {
+            "description": "Successfully!"
+          }
+        }
+      }
+    },
+    "/api/delivery/{id}": {
+      "get": {
+        "tags": ["Delivery"],
+        "summary": "Get delivery by Id",
+        "parameters": [{
+          "in": "path",
+          "name": "id",
+          "required": true,
+          "type": "number"
         }],
         "responses": {
           "200": {
@@ -209,7 +254,7 @@
     },
 
     "/api/mails/send": {
-      "get": {
+      "post": {
         "tags": ["Mails"],
         "summary": "Send mail to activate the account",
         "parameters": [{
@@ -233,7 +278,7 @@
         }
       }
     },
-    "/api/activate/{link}": {
+    "/api/mails/activate/{link}": {
       "get": {
         "tags": ["Mails"],
         "summary": "Activate mail by link",
@@ -251,8 +296,75 @@
       }
     },
 
-    "/api/rates/{deviceId}": {
+    "/api/orders/": {
+      "post": {
+        "tags": ["Orders"],
+        "summary": "Create order",
+        "parameters": [{
+          "in": "body",
+          "name": "deliveryTypeId",
+          "required": true,
+          "schema": {
+            "type": "number",
+            "properties": {
+              "deliveryTypeId": {
+                "type": "number",
+                "example": 1
+              }
+            }
+          }
+        }],
+        "responses": {
+          "200": {
+            "description": "Successfully!"
+          }
+        }
+      },
       "get": {
+        "tags": ["Orders"],
+        "summary": "Get your orders",
+        "responses": {
+          "200": {
+            "description": "Successfully!"
+          }
+        }
+      }
+    },
+    "/api/orders/{orderId}": {
+      "get": {
+        "tags": ["Orders"],
+        "summary": "Get your order",
+        "parameters": [{
+          "in": "path",
+          "name": "orderId",
+          "required": true,
+          "type": "number"
+        }],
+        "responses": {
+          "200": {
+            "description": "Successfully!"
+          }
+        }
+      },
+      "put": {
+        "tags": ["Orders"],
+        "summary": "Payment for order",
+        "parameters": [{
+          "in": "path",
+          "name": "orderId",
+          "required": true,
+          "type": "number"
+        }],
+        "responses": {
+          "200": {
+            "description": "Successfully!"
+          }
+        }
+      }
+    },
+
+    "/api/rates/{deviceId}": {
+      "post": {
         "tags": ["Rates"],
         "summary": "Set rating to device by id",
         "parameters": [{
@@ -328,6 +440,5 @@
       }
     }
   },
-
   "swagger": "2.0"
 }
