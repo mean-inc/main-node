@@ -7,7 +7,7 @@ class DeliveryController {
             const deliveries = await DeliveryTypesModel.findAll()
             return res.json({deliveries})
         } catch (e) {
-            console.log(e)
+            next(e)
         }
     }
 
@@ -17,7 +17,7 @@ class DeliveryController {
             const delivery = await DeliveryTypesModel.findByPk(id)
             return res.json({delivery})
         } catch (e) {
-            console.log(e)
+            next(e)
         }
     }
 }
